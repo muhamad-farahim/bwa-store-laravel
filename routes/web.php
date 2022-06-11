@@ -8,7 +8,7 @@ use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardProductController;
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // use App\Http\Controllers\HomeController;
 
@@ -29,9 +29,13 @@ Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details'
 Route::get('/cart', [CartsController::class, 'index'])->name('cart');
 Route::get('/success', [CartsController::class, 'success'])->name('success');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
+Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
 Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'details'])->name('dashboard-product-details');
+
+Route::get('/dashboard/transactions', [DashboardTransactionController::class, 'index'])->name('dashboard-transactions');
 
 Auth::routes();
 
