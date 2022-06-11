@@ -9,6 +9,8 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardTransactionController;
+use App\Http\Controllers\DashboardSettingController;
+
 
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -38,7 +40,12 @@ Route::get('/dashboard/product/create', [DashboardProductController::class, 'cre
 Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'details'])->name('dashboard-product-details');
 
 Route::get('/dashboard/transactions', [DashboardTransactionController::class, 'index'])->name('dashboard-transactions');
-Route::get('/dashboard/transactions', [DashboardTransactionController::class, 'index'])->name('dashboard-transactions');
+Route::get('/dashboard/transactions/{id}', [DashboardTransactionController::class, 'details'])->name('dashboard-transactions-details');
+
+Route::get('/dashboard/settings', [DashboardSettingController::class, 'store'])->name('dashboard-setting-store');
+Route::get('/dashboard/account', [DashboardSettingController::class, 'account'])->name('dashboard-setting-account');
+
+
 
 Auth::routes();
 
