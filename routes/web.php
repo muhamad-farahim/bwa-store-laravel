@@ -31,6 +31,7 @@ Route::get('/success', [CartsController::class, 'success'])->name('success');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
+Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'details'])->name('dashboard-product-details');
 
 Auth::routes();
 
