@@ -45,11 +45,15 @@ Route::get('/dashboard/transactions/{id}', [DashboardTransactionController::clas
 Route::get('/dashboard/settings', [DashboardSettingController::class, 'store'])->name('dashboard-setting-store');
 Route::get('/dashboard/account', [DashboardSettingController::class, 'account'])->name('dashboard-setting-account');
 
-Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'admin'])
-->group(function(){
-    Route::get('/', [DashboardController::class], 'index')->name('admin-dashboard');
-});
+// Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'admin'])
+// ->group(function(){
+//     Route::get('/', [DashboardController::class], 'index')->name('admin-dashboard');
+// });
 
+Route::prefix('admin')->namespace('Admin')->middleware([])
+->group(function(){
+    Route::get('/', [DashboardController::class, 'index']);
+});
 
 
 Auth::routes();
