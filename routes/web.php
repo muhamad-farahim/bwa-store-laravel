@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\DashboardController;
 
 // use App\Http\Controllers\HomeController;
 
@@ -26,6 +27,7 @@ Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details'
 Route::get('/cart', [CartsController::class, 'index'])->name('cart');
 Route::get('/success', [CartsController::class, 'success'])->name('success');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Auth::routes();
 
 Route::get('/home', function(){
