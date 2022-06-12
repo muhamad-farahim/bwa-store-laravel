@@ -62,7 +62,7 @@ Page Dashboard
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-1">
-                          <img src="./images/dashboard-icon-product-1.png" alt="">
+                          <img src="../images/dashboard-icon-product-1.png" alt="">
                         </div>
                         <div class="col-md-4">
                           Shirup Marzzan
@@ -83,7 +83,7 @@ Page Dashboard
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-1">
-                          <img src="./images/dashboard-icon-product-2.png" alt="">
+                          <img src="../images/dashboard-icon-product-2.png" alt="">
                         </div>
                         <div class="col-md-4">
                           LeBrone X
@@ -104,7 +104,7 @@ Page Dashboard
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-1">
-                          <img src="./images/dashboard-icon-product-3.png" alt="">
+                          <img src=".../images/dashboard-icon-product-3.png" alt="">
                         </div>
                         <div class="col-md-4">
                           Soffa Lembutte
