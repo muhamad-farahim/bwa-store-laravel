@@ -12,8 +12,6 @@ use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardTransactionController;
 use App\Http\Controllers\DashboardSettingController;
 
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-
 
 
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -57,7 +55,7 @@ Route::get('/dashboard/account', [DashboardSettingController::class, 'account'])
 
 Route::prefix('admin')->namespace('Admin')
 ->group(function(){
-    Route::get('/', [AdminDashboardController::class, 'index']);
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
 });
 
 
