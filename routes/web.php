@@ -57,7 +57,7 @@ Route::get('/dashboard/account', [DashboardSettingController::class, 'account'])
 
 Route::prefix('admin')->namespace('Admin')
 ->group(function(){
-    Route::get('/', [AdminDashboardController::class, 'index']);
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
 });
 
 
