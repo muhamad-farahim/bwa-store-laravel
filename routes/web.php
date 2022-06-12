@@ -12,8 +12,6 @@ use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardTransactionController;
 use App\Http\Controllers\DashboardSettingController;
 
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-
 
 
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
