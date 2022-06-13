@@ -41,6 +41,7 @@ Route::get('/categories', [CategoriesController::class, 'index'])->name('categor
 Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details');
 Route::post('/details/{id}', [DetailsController::class, 'add'])->name('details-add');
 Route::get('/cart', [CartsController::class, 'index'])->name('cart');
+Route::delete('/cart/{id}', [CartsController::class, 'delete'])->name('cart-delete');
 Route::get('/success', [CartsController::class, 'success'])->name('success');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
 

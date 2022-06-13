@@ -55,7 +55,7 @@
         @forelse ($products as $product)
 
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="{{ $aosdelayinc += 100 }}">
-          <a href="./details.html" class="components-products d-block">
+          <a href="{{ route('details', ['id' => $product->slug]) }}" class="components-products d-block">
             <div class="products-thumbnail">
               <div class="products-image" style="background-image: url('{{ Storage::url($product->galleries->first()->photo) }}');"></div>
             </div>
@@ -63,7 +63,7 @@
               {{ $product->name }}
             </div>
             <div class="products-price">
-              ${{ $product->price }}
+              ${{ number_format($product->price) }}
             </div>
           </a>
         </div>

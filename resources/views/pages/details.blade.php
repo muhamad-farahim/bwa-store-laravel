@@ -66,7 +66,7 @@
             <div class="col-lg-8">
               <h1>{{ $product->name }}</h1>
               <div class="owner">{{ $product->user->name }}</div>
-              <div class="price">${{ $product->price }}</div>
+              <div class="price">${{ number_format($product->price )}}</div>
             </div>
             <div class="col-lg-2">
               @auth
@@ -159,11 +159,16 @@
         @foreach($product->galleries as $photo)
 
           {
-            id: {{ $photo->id }},
+            id: 1,
             url: "{{ Storage::url($photo->photo) }}"
-          }
+          },
 
         @endforeach
+
+        // {
+        //   id: 1,
+        //   url: "http://localhost:8000/storage/assets/ProductGallery/yTtm10MQFBPjYF9VfIzgzAO7mUnr1Z2GhIyhEgeN.png"
+        // }
       ],
     },
     methods: {
@@ -173,13 +178,4 @@
     },
   });
 </script>
-@endpush
-
-@push('prepend-scripts')
-
-<script src="../vendor/jquery/jquery.slim.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script src="../scripts/navbar-scroll.js"></script>
-    
 @endpush

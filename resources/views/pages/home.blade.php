@@ -93,7 +93,7 @@ Page Home
                 {{ $product->name }}
               </div>
               <div class="products-price">
-                ${{ $product->price }}
+                ${{ number_format($product->price) }}
               </div>
             </a>
           </div>
