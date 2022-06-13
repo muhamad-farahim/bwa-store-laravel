@@ -5,14 +5,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;    
 
-use \App\Models\Category;
+use \App\Models\User;
 
-use \App\Http\Requests\admin\CategoryRequest;
+use \App\Http\Requests\admin\UserRequest;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {
 
         if (request()->ajax()) {
-            $query = Category::query();
+            $query = User::query();
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
@@ -38,10 +38,10 @@ class CategoryController extends Controller
                                         Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                                    <a class="dropdown-item" href="' . route('admin.category.edit', $item->id) . '">
+                                    <a class="dropdown-item" href="' . route('admin.user.edit', $item->id) . '">
                                         Sunting
                                     </a>
-                                    <form action="' . route('admin.category.destroy', $item->id) . '" method="POST">
+                                    <form action="' . route('admin.user.destroy', $item->id) . '" method="POST">
                                         ' . method_field('delete') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger">
                                             Hapus
@@ -51,13 +51,9 @@ class CategoryController extends Controller
                             </div>
                     </div>';
                 })
-                ->editColumn('photo', function ($item) {
-                    return $item->photo ? '<img src="' . Storage::url($item->photo) . '" style="max-height: 40px;"/>' : '';
-                })
-                ->rawColumns(['action', 'photo'])
-                ->make();
+                ->rawColumns(['action']) -> make();
         }
-        return view('pages.admin.category.index');
+        return view('pages.admin.user.index');
     }
 
     /**
@@ -69,7 +65,7 @@ class CategoryController extends Controller
     {
         
 
-        return view('pages.admin.category.create');
+        return view('pages.admin.user.create');
     }
 
     /**
@@ -78,15 +74,15 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(UserRequest $request)
     {
        $data = $request -> all();
-       $data['slug'] = Str::slug($data['name']);
-       $data['photo'] = $request->file('photo')->store('assets/category', 'public');
 
-       Category::create($data);
+       $data['password'] = bcrypt($data['password']);
 
-       return redirect()->route('admin.category.index');
+       User::create($data);
+
+       return redirect()->route('admin.user.index');
     }
 
     /**
@@ -109,9 +105,9 @@ class CategoryController extends Controller
     public function edit($id)
     {   
 
-        $instance = Category::findOrFail($id);
+        $instance = User::findOrFail($id);
 
-        return view('pages.admin.category.edit', compact('instance'));
+        return view('pages.admin.user.edit', compact('instance'));
     }
 
     /**
@@ -121,17 +117,17 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {   
-        $instance = Category::findOrFail($id);
+        $instance = User::findOrFail($id);
 
         $data = $request->all();
 
-        $data['photo'] = $request->file('photo')->store('assets/category', 'public');
+        $data['password'] = bcrypt($data['password']);
 
         $instance->update($data);
 
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -142,10 +138,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $instance = Category::findOrFail($id);
+        $instance = User::findOrFail($id);
 
         $instance->delete();
 
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.user.index');
     }
 }

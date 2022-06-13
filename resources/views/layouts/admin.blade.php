@@ -12,6 +12,7 @@
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link href="/style/main.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
     @stack('addon-styles')
 
 </head>
@@ -24,14 +25,23 @@
       <!-- Sidebar -->
       <div class="border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
-          <img src="../images/admin.png" alt="" class="my-4 w-50"  />
+          <img src="{{ url('./images/admin.png') }}" alt="" class="my-4 " style="max-width: 150px;" />
         </div>
         <div class="list-group list-group-flush">
-          <a href="" class="list-group-item list-group-item-action">Dashboard</a>
-          <a href="" class="list-group-item list-group-item-action">Products</a>
-          <a href="" class="list-group-item list-group-item-action">Categories</a>
+          <a href="{{ route('admin.dashboard') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin') ? "active" : "") }} "
+          >Dashboard</a>
+          <a href="{{ route('admin.product.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/product*') && ! request()->is('admin/product-gallery*') ? "active" : "") }}"
+          >Products</a>
+          <a href="{{ route('admin.product-gallery.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/product-gallery*') ? "active" : "") }}"
+          >Product Gallery</a>
+          <a href="{{ route('admin.category.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/category*') ? "active" : "") }}"
+          >Categories</a>
           <a href="" class="list-group-item list-group-item-action">Transactions</a>
-          <a href="" class="list-group-item list-group-item-action">Users</a>
+          <a href="{{ route('admin.user.index') }}"  class="list-group-item list-group-item-action {{ (request()->is('admin/user*') ? "active" : "") }}">Users</a>
           <a href="" class="list-group-item list-group-item-action">Sign out</a>
 
         </div>
@@ -95,9 +105,10 @@
   <!-- Bootstrap core JavaScript -->
   @stack('prepend-scripts')
 
-  <script src="/vendor/jquery/jquery.slim.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
   <script>
     AOS.init();
   </script>
@@ -108,6 +119,8 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
+
+  
     @stack('addon-scripts')
 
 </body>

@@ -14,6 +14,13 @@ use App\Http\Controllers\DashboardSettingController;
 
 
 
+use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProductGalleryController;
+
+
+
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // use App\Http\Controllers\HomeController;
@@ -32,6 +39,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/categories', [CategoriesController::class, 'index'])->name('categories');
 Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details');
+Route::post('/details/{id}', [DetailsController::class, 'add'])->name('details-add');
 Route::get('/cart', [CartsController::class, 'index'])->name('cart');
 Route::get('/success', [CartsController::class, 'success'])->name('success');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('success');
@@ -53,14 +61,18 @@ Route::get('/dashboard/account', [DashboardSettingController::class, 'account'])
 //     Route::get('/', [DashboardController::class], 'index')->name('admin-dashboard');
 // });
 
-Route::prefix('admin')->namespace('Admin')
+Route::prefix('admin')->name('admin.')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
 ->group(function(){
-    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('category',CategoryController::class);
+    Route::resource('user',UserController::class);
+    Route::resource('product',ProductController::class);
+    Route::resource('product-gallery',ProductGalleryController::class);
 });
 
 
 Auth::routes();
 
-Route::get('/home', function(){
-    return view('welcome');
-})->name('home');
+// Route::get('/home', function(){
+//     return view('welcome');
+// })->name('home');
