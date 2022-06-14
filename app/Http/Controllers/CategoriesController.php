@@ -12,7 +12,7 @@ class CategoriesController extends Controller
     function index(){
 
         $categories = Category::all();
-        $products = Product::take(32)->get();
+        $products = Product::take(32)->has('galleries')->get();
 
         return view('pages.categories', compact(['categories', 'products']));
     }

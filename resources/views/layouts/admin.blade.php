@@ -66,17 +66,23 @@
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   <img src="/images/icon-user.png" alt="" class="rounded-circle mr-2 profile-picture" />
-                  Hi, Angga
+                  Hi, {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/index.html">Back to Store</a>
-                  <a class="dropdown-item" href="/dashboard-account.html">Settings</a>
+                  <a class="dropdown-item" href="{{ route('home') }}">Back to Store</a>
+                  <a class="dropdown-item" href="{{ route('dashboard-setting-account') }}">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/">Logout</a>
+                  <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                               Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-inline-block mt-2" href="#">
+                <a class="nav-link d-inline-block mt-2" href="{{ route('cart') }}">
                   <img src="/images/icon-cart-empty.svg" alt="" />
                 </a>
               </li>

@@ -88,7 +88,7 @@
           <h2 class="mb-4">Shipping Details</h2>
         </div>
       </div>
-      <form  method="POST" enctype="multipart/form-data">
+      <form  method="POST" action="{{ route('checkout') }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="total_price" value="{{ $totalPrice }}">
         <div class="row mb-2" data-aos="fade-up" data-aos-delay="200" id="locations">

@@ -33,10 +33,10 @@
             <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <img src="{{ url('./images/icon-user.png') }}" alt="" class="rounded-circle mr-2 profile-picture" />
-              Hi, Angga
+              Hi, {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ route('home') }}">Dashboard</a>
+              <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
               <a class="dropdown-item" href="{{ route('dashboard-setting-account') }}">Settings</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"
