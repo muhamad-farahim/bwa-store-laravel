@@ -19,23 +19,36 @@ Account setting
             <div class="dashboard-content">
               <div class="row">
                 <div class="col-12">
-                  <form action="">
+                  <form action="{{ route('dashboard-setting-redirect', 'dashboard-setting-store') }}">
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="">Store Name</label>
-                              <input type="text" value="papel la casa" class="form-control" name="namaToko">
+                              <input type="text" class="form-control" name="store_name" value="{{ $user->store_name }}">
                             </div>
 
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="">Category</label>
-                              <select class="form-control" name="category">
-                                <option value="furniture">Furniture</option>
-                              </select>
+                              <select
+                                  type="text"
+                                  value="papel la casa"
+                                  class="form-control"
+                                  name="categories_id"
+                                >
+                                  @foreach ($categories as $category)
+                                        @if ($category->id == $user->categories_id)
+
+                                          <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                                            
+                                        @else
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endif
+                                  @endforeach 
+                                </select>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -45,13 +58,13 @@ Account setting
                                 Is your store open?
                               </p>
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input class="custom-control-input" type="radio" name="is_store_open" id="openStoreTrue"
-                                  value="true" checked />
+                                <input class="custom-control-input" type="radio" name="store_status" id="openStoreTrue"
+                                  value="1" {{ $user->store_status === 1 ? 'checked': '' }} />
                                 <label class="custom-control-label" for="openStoreTrue">Open</label>
                               </div>
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input class="custom-control-input" type="radio" name="is_store_open"
-                                  id="openStoreFalse" value="false" />
+                                <input class="custom-control-input" type="radio" name="store_status"
+                                  id="openStoreFalse" value="0" {{ $user->store_status === 0 || $user->store_status === null ? 'checked': '' }}/>
                                 <label makasih class="custom-control-label" for="openStoreFalse">Temporarily
                                   closed</label>
                               </div>

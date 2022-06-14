@@ -3,17 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\TransactionDetail;
 
 class DashboardTransactionController extends Controller
 {
-    function index(){
+    function index(Request $request)
+    {
 
+        $sellTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->whereHas('product', function ($product) {
+                $product->where('user_id', Auth::user()->id);
+            })->get();
+        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->whereHas('transaction', function ($transaction) {
+                $transaction->where('users_id', Auth::user()->id);
+            })->get();
 
-        return view('pages.dashboard-transactions');
+        return view('pages.dashboard-transactions', compact(['sellTransactions', 'buyTransactions']));
     }
-    function details(){
+    function details(Request $request, $id)
+    {
+        $transaction = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->findOrFail($id);
+        return view('pages.dashboard-transactions-details', compact('transaction'));
+    }
 
+    function update(Request $request, $id)
+    {
+        $data = $request->all();
 
-        return view('pages.dashboard-transactions-details');
+        dd($data);
+
+        $item = TransactionDetail::findOrFail($id);
+
+        dd($item);
+        $item->update($data);
+
+        return redirect()->route('dashboard-transactions-details', $id);
     }
 }
