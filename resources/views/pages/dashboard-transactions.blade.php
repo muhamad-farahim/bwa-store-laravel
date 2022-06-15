@@ -31,21 +31,24 @@ Store Dashboard Transaction
                   </ul>
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-sell" role="tabpanel"
-                      aria-labelledby="pills-home-tab"><a href="./dashboard-transaction-details.html"
-                        class="card card-list d-block">
+                      aria-labelledby="pills-home-tab">
+                      
+                      @foreach ($sellTransactions as $st)
+                          
+                      <a href="{{ route('dashboard-transactions-details', $st->id) }}" class="card card-list d-block">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-1">
-                              <img src="../images/dashboard-icon-product-1.png" alt="">
+                              <img src="{{ Storage::url($st->product->galleries->first()->photo ) ?? null }}" class="w-100" alt="">
                             </div>
                             <div class="col-md-4">
-                              Shirup Marzzan
+                              {{ $st->product->name }}
                             </div>
                             <div class="col-md-3">
-                              Angga Risky
+                              {{ $st->transaction->user->name }}
                             </div>
                             <div class="col-md-3">
-                              12 Januari, 2020
+                              {{ $st->created_at }}
                             </div>
                             <div class="col-1 d-none d-md-block">
                               <img src="../images/dashboard-arrow-right.svg" alt="">
@@ -53,50 +56,37 @@ Store Dashboard Transaction
                           </div>
                         </div>
                       </a>
-                      <a href="./dashboard-transaction-details.html" class="card card-list d-block">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-1">
-                              <img src="../images/dashboard-icon-product-2.png" alt="">
-                            </div>
-                            <div class="col-md-4">
-                              LeBrone X
-                            </div>
-                            <div class="col-md-3">
-                              Masayoshi
-                            </div>
-                            <div class="col-md-3">
-                              11 January, 2020
-                            </div>
-                            <div class="col-1 d-none d-md-block">
-                              <img src="./images/dashboard-arrow-right.svg" alt="">
-                            </div>
-                          </div>
-                        </div>
-                      </a>
+
+                      @endforeach
+
+                      
                     </div>
                     <div class="tab-pane fade" id="pills-buy" role="tabpanel" aria-labelledby="pills-profile-tab">
-                      <a href="./dashboard-transaction-details.html" class="card card-list d-block">
+                      @foreach ($buyTransactions as $sb)
+                          
+                      <a href="{{ route('dashboard-transactions-details', $sb->id) }}" class="card card-list d-block">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-md-1">
-                              <img src="./images/dashboard-icon-product-3.png" alt="">
+                              <img src="{{ Storage::url($sb->product->galleries->first()->photo ) ?? null }}" class="w-100" alt="">
                             </div>
                             <div class="col-md-4">
-                              Soffa Lembutte
+                              {{ $sb->product->name }}
                             </div>
                             <div class="col-md-3">
-                              Shayna
+                              {{ $sb->transaction->user->name }}
                             </div>
                             <div class="col-md-3">
-                              11 January, 2020
+                              {{ $sb->date_created }}
                             </div>
                             <div class="col-1 d-none d-md-block">
-                              <img src="./images/dashboard-arrow-right.svg" alt="">
+                              <img src="../images/dashboard-arrow-right.svg" alt="">
                             </div>
                           </div>
                         </div>
                       </a>
+
+                      @endforeach
                     </div>
 
                   </div>

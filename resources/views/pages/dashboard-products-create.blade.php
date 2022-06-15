@@ -19,7 +19,19 @@ Store Dashboard Product Details
               <div class="dashboard-content">
                 <div class="row">
                   <div class="col-12">
-                    <form action="">
+                    @if ($errors -> any())
+
+
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+
+                    
+                @endif
+                    <form action="{{ route('dashboard-product-store') }}" method="POST" enctype="multipart/form-data">
+                      @csrf
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
@@ -30,7 +42,7 @@ Store Dashboard Product Details
                                   type="text"
                                   value="papel la casa"
                                   class="form-control"
-                                  name="namaToko"
+                                  name="name"
                                 />
                               </div>
                             </div>
@@ -52,9 +64,11 @@ Store Dashboard Product Details
                                   type="text"
                                   value="papel la casa"
                                   class="form-control"
-                                  name="namaToko"
+                                  name="categories_id"
                                 >
-                                  <option value="shipping">Shipping</option>
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach 
                                 </select>
                               </div>
                             </div>
@@ -66,6 +80,12 @@ Store Dashboard Product Details
                                   name="description"
                                   rows="10"
                                 ></textarea>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="form-group">
+                                <label for="">Thumbnails</label>
+                                <input type="file" name="photo" class="form-control" id="" multiple  >
                               </div>
                             </div>
                           </div>
@@ -83,7 +103,7 @@ Store Dashboard Product Details
                     </form>
                   </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                   <div class="col-12">
                     <div class="card">
                       <div class="card-body">
@@ -129,6 +149,7 @@ Store Dashboard Product Details
                               type="file"
                               id="file"
                               style="display: none"
+                              name="photo"
                               multiple
                             />
                             <button
@@ -142,7 +163,7 @@ Store Dashboard Product Details
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> --}}
               </div>
             </div>
           </div>

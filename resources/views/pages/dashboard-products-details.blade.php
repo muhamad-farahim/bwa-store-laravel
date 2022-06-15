@@ -19,7 +19,19 @@ Store Dashboard Product Details
               <div class="dashboard-content">
                 <div class="row">
                   <div class="col-12">
-                    <form action="">
+                    @if ($errors -> any())
+
+
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+
+                    
+                @endif
+                    <form action="{{ route('dashboard-product-update', $product->id) }}" method="POST">
+                      @csrf
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
@@ -28,9 +40,9 @@ Store Dashboard Product Details
                                 <label for="">Product Name</label>
                                 <input
                                   type="text"
-                                  value="papel la casa"
+                                  value="{{ $product->name }}"
                                   class="form-control"
-                                  name="namaToko"
+                                  name="name"
                                 />
                               </div>
                             </div>
@@ -40,6 +52,7 @@ Store Dashboard Product Details
                                 <input
                                   type="number"
                                   name="price"
+                                  value="{{ $product->price }}"
                                   id=""
                                   class="form-control"
                                 />
@@ -52,9 +65,17 @@ Store Dashboard Product Details
                                   type="text"
                                   value="papel la casa"
                                   class="form-control"
-                                  name="namaToko"
+                                  name="categories_id"
                                 >
-                                  <option value="shipping">Shipping</option>
+                                  @foreach ($categories as $category)
+                                        @if ($category->id == $product->category->id)
+
+                                          <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                                            
+                                        @else
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endif
+                                  @endforeach 
                                 </select>
                               </div>
                             </div>
@@ -65,7 +86,7 @@ Store Dashboard Product Details
                                   id="editor"
                                   name="description"
                                   rows="10"
-                                ></textarea>
+                                >{{ $product->description }}</textarea>
                               </div>
                             </div>
                           </div>
@@ -88,55 +109,44 @@ Store Dashboard Product Details
                     <div class="card">
                       <div class="card-body">
                         <div class="row">
+
+                          @foreach ($product->galleries as $photo)
+                              
                           <div class="col-md-4">
                             <div class="gallery-container">
                               <img
-                                src="images/product-card-1.png"
+                                src="{{ Storage::url($photo->photo) }}"
                                 alt=""
                                 class="w-100"
                               />
-                              <a href="#" class="delete-gallery"
-                                ><img src="images/icon-delete.svg" alt=""
+                              <a href="{{ route('dashboard-product-gallery-delete', $photo->id) }}" class="delete-gallery"
+                                ><img src="{{ url('images/icon-delete.svg') }}" alt=""
                               /></a>
                             </div>
                           </div>
-                          <div class="col-md-4">
-                            <div class="gallery-container">
-                              <img
-                                src="images/product-card-2.png"
-                                alt=""
-                                class="w-100"
-                              />
-                              <a href="#" class="delete-gallery"
-                                ><img src="images/icon-delete.svg" alt=""
-                              /></a>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="gallery-container">
-                              <img
-                                src="images/product-card-3.png"
-                                alt=""
-                                class="w-100"
-                              />
-                              <a href="#" class="delete-gallery"
-                                ><img src="images/icon-delete.svg" alt=""
-                              /></a>
-                            </div>
-                          </div>
+
+                          @endforeach
+
                           <div class="col-12">
-                            <input
+                            <form action="{{ route('dashboard-product-gallery-upload') }}" method="POST" enctype="multipart/form-data">
+                              @csrf
+                              <input type="hidden" name="products_id" value="{{ $product->id }}">
+                              <input
                               type="file"
                               id="file"
                               style="display: none"
+                              name="photo"
+                              onchange="form.submit()"
                               multiple
                             />
                             <button
+                            type="button"
                               class="btn btn-secondary btn-block mt-3"
                               onclick="thisFileUpload()"
                             >
                               Add photo
                             </button>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -149,7 +159,7 @@ Store Dashboard Product Details
 
 @endsection
 
-@push('addon-script')
+@push('addon-scripts')
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script>
       function thisFileUpload() {
@@ -159,4 +169,6 @@ Store Dashboard Product Details
     <script>
       ClassicEditor.create(document.querySelector("#editor"));
     </script>
+
+    
 @endpush

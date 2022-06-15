@@ -18,56 +18,25 @@ Store Dashboard Product
             <div class="dashboard-content">
               <div class="row mt-4">
                 <div class="col-12">
-                  <a href="./dashboard.html" class="btn btn-success">Add New Products</a>
+                  {{-- //dawdawdwwd --}}
+                  <a href="{{ route('dashboard-product-create') }}" class="btn btn-success">Add New Products</a>
                 </div>
               </div>
               <div class="row mt-4">
 
+                @foreach ($products as $product)
+                    
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <a class="card card-dashboard-product d-block">
+                  <a href="{{ route('dashboard-product-details', ["id" => $product->id]) }}" class="card card-dashboard-product d-block">
                     <div class="card-body">
-                      <img src="../images/product-card-1.png" alt="" class="w-100 mb-2">
-                      <div class="product-title">Shirrup marzan</div>
-                      <div class="product-category">Foods</div>
+                      <img src="{{ Storage::url($product->galleries->first()->photo) }}" alt="" class="w-100 mb-2">
+                      <div class="product-title">{{ $product->name }}</div>
+                      <div class="product-category">{{ $product->category->name }}</div>
                     </div>
                   </a>
                 </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <a class="card card-dashboard-product d-block">
-                    <div class="card-body">
-                      <img src="../images/product-card-2.png" alt="" class="w-100 mb-2">
-                      <div class="product-title">Shirrup marzan</div>
-                      <div class="product-category">Foods</div>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <a class="card card-dashboard-product d-block">
-                    <div class="card-body">
-                      <img src="../images/product-card-3.png" alt="" class="w-100 mb-2">
-                      <div class="product-title">Shirrup marzan</div>
-                      <div class="product-category">Foods</div>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <a class="card card-dashboard-product d-block">
-                    <div class="card-body">
-                      <img src="../images/product-card-4.png" alt="" class="w-100 mb-2">
-                      <div class="product-title">Shirrup marzan</div>
-                      <div class="product-category">Foods</div>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <a class="card card-dashboard-product d-block">
-                    <div class="card-body">
-                      <img src="../images/product-card-5.png" alt="" class="w-100 mb-2">
-                      <div class="product-title">Shirrup marzan</div>
-                      <div class="product-category">Foods</div>
-                    </div>
-                  </a>
-                </div>
+
+                @endforeach
 
               </div>
             </div>
