@@ -19,9 +19,8 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductGalleryController;
-
-
-
+use App\Http\Controllers\admin\TransactionController;
+use App\Models\Transaction;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // use App\Http\Controllers\HomeController;
@@ -57,6 +56,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')
         Route::resource('user', UserController::class);
         Route::resource('product', ProductController::class);
         Route::resource('product-gallery', ProductGalleryController::class);
+        Route::resource('transactions', TransactionController::class);
     });
 
 Route::group(["middleware" => ['auth']], function () {

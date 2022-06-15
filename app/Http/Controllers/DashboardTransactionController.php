@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Transaction;
 use App\Models\TransactionDetail;
 
 class DashboardTransactionController extends Controller
@@ -32,13 +33,16 @@ class DashboardTransactionController extends Controller
 
     function update(Request $request, $id)
     {
-        $data = $request->all();
+        $data = $request->validate(
+            [
+                "transaction_status" => "in:UNPAID,PENDING,SHIPPING,SUCCESS"
+            ]
+        );
 
-        dd($data);
+        $td = TransactionDetail::findOrFail($id);
 
-        $item = TransactionDetail::findOrFail($id);
+        $item = Transaction::findOrFail($td->transactions_id);
 
-        dd($item);
         $item->update($data);
 
         return redirect()->route('dashboard-transactions-details', $id);
