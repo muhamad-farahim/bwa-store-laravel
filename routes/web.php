@@ -50,7 +50,7 @@ Route::get('/checkout/callback', [CheckoutController::class, 'callback'])->name(
 
 
 
-Route::prefix('admin')->name('admin.')->middleware('admin')
+Route::prefix('admin')->name('admin.')->middleware('auth')
     ->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
         Route::resource('category', CategoryController::class);
