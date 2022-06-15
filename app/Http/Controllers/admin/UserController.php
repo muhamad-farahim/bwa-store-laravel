@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;    
+use Yajra\DataTables\Facades\DataTables;
 
 use \App\Models\User;
 
@@ -51,7 +52,7 @@ class UserController extends Controller
                             </div>
                     </div>';
                 })
-                ->rawColumns(['action']) -> make();
+                ->rawColumns(['action'])->make();
         }
         return view('pages.admin.user.index');
     }
@@ -63,7 +64,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+
 
         return view('pages.admin.user.create');
     }
@@ -76,13 +77,13 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-       $data = $request -> all();
+        $data = $request->all();
 
-       $data['password'] = bcrypt($data['password']);
+        $data['password'] = bcrypt($data['password']);
 
-       User::create($data);
+        User::create($data);
 
-       return redirect()->route('admin.user.index');
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -102,9 +103,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {   
-
+    public function edit(Request $request, $id)
+    {
         $instance = User::findOrFail($id);
 
         return view('pages.admin.user.edit', compact('instance'));
@@ -117,11 +117,35 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
-    {   
+    public function update(Request $request, $id)
+    {
+
+
         $instance = User::findOrFail($id);
 
-        $data = $request->all();
+
+        if ($request->email !== $instance->email) {
+
+            $data = $request->validate(
+                [
+                    "name" => "required|string|max:50",
+                    "email" => "required|email|unique:users",
+                    "password" => "required|confirmed",
+                    "roles" => "required|in:ADMIN,USER",
+                ]
+            );
+        } else {
+
+            $data = $request->validate(
+                [
+                    "name" => "required|string|max:50",
+                    "email" => "required|email",
+                    "password" => "required|confirmed",
+                    "roles" => "required|in:ADMIN,USER",
+                ]
+            );
+        }
+
 
         $data['password'] = bcrypt($data['password']);
 
