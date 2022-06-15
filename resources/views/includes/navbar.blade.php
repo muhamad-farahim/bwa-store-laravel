@@ -38,8 +38,8 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              @if(Auth::user()->role === 'ADMIN')
-              <a href="dropdown-item" href="{{ route('admin.dashboard') }}">Admin</a>
+              @if(Auth::user()->roles === 'ADMIN')
+                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin</a>
               @endif
               <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
               <a class="dropdown-item" href="{{ route('dashboard-setting-account') }}">Settings</a>
