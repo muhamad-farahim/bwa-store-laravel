@@ -149,7 +149,7 @@ Store Dashboard Product Details
 
 @endsection
 
-@push('addon-script')
+@push('addon-scripts')
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <script>
       ClassicEditor.create(document.querySelector("#editor"));

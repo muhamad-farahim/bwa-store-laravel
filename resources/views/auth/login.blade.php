@@ -20,23 +20,30 @@
           </div>
           <div class="col-lg-5">
             <h2>Belanja kebutuhan utama, menjadi lebih mudah</h2>
-            <form class="mt-3">
+            <form class="mt-3" method="POST" action="{{ route('login') }}">
+              @csrf
               <div class="form-group">
                 <label>Email adress</label>
-                <input type="email" class="form-control w-75" />
+                <input id="email" type="email" class="form-control w-75 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                @error('email')
+                  <div class="alert alert-danger w-75">{{ $message }}</div>  
+                @enderror
               </div>
               <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control w-75" />
+                <input id="password" type="password" class="form-control w-75 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                @error('password')
+                  <div class="alert alert-danger w-75">{{ $message }}</div>  
+                @enderror
               </div>
-              <a
-                href="/dashboard.html"
+              <button
                 class="btn btn-success btn-block w-75 mt-4"
+                type="submit"
               >
                 Sign In to My Account
-              </a>
+              </button>
               <a
-                href="/dashboard.html"
+                href="{{ route('register') }}"
                 class="btn btn-signup btn-block w-75 mt-4"
               >
                 Sign up
@@ -48,6 +55,14 @@
     </div>
   </div>
 
+
+
+
+
+
+
+
+  
 <div class="container d-none">
     <div class="row justify-content-center">
         <div class="col-md-8">

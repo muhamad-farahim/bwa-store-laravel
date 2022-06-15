@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            
             $table->longText('address_one');
             $table->longText('address_two');
             $table->integer('provinces_id');

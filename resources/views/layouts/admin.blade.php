@@ -12,6 +12,7 @@
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link href="/style/main.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
     @stack('addon-styles')
 
 </head>
@@ -24,14 +25,23 @@
       <!-- Sidebar -->
       <div class="border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center">
-          <img src="../images/admin.png" alt="" class="my-4 w-50"  />
+          <img src="{{ url('./images/admin.png') }}" alt="" class="my-4 " style="max-width: 150px;" />
         </div>
         <div class="list-group list-group-flush">
-          <a href="" class="list-group-item list-group-item-action">Dashboard</a>
-          <a href="" class="list-group-item list-group-item-action">Products</a>
-          <a href="" class="list-group-item list-group-item-action">Categories</a>
+          <a href="{{ route('admin.dashboard') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin') ? "active" : "") }} "
+          >Dashboard</a>
+          <a href="{{ route('admin.product.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/product*') && ! request()->is('admin/product-gallery*') ? "active" : "") }}"
+          >Products</a>
+          <a href="{{ route('admin.product-gallery.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/product-gallery*') ? "active" : "") }}"
+          >Product Gallery</a>
+          <a href="{{ route('admin.category.index') }}" 
+          class="list-group-item list-group-item-action {{ (request()->is('admin/category*') ? "active" : "") }}"
+          >Categories</a>
           <a href="" class="list-group-item list-group-item-action">Transactions</a>
-          <a href="" class="list-group-item list-group-item-action">Users</a>
+          <a href="{{ route('admin.user.index') }}"  class="list-group-item list-group-item-action {{ (request()->is('admin/user*') ? "active" : "") }}">Users</a>
           <a href="" class="list-group-item list-group-item-action">Sign out</a>
 
         </div>
@@ -56,17 +66,23 @@
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   <img src="/images/icon-user.png" alt="" class="rounded-circle mr-2 profile-picture" />
-                  Hi, Angga
+                  Hi, {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/index.html">Back to Store</a>
-                  <a class="dropdown-item" href="/dashboard-account.html">Settings</a>
+                  <a class="dropdown-item" href="{{ route('home') }}">Back to Store</a>
+                  <a class="dropdown-item" href="{{ route('dashboard-setting-account') }}">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/">Logout</a>
+                  <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                               Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-inline-block mt-2" href="#">
+                <a class="nav-link d-inline-block mt-2" href="{{ route('cart') }}">
                   <img src="/images/icon-cart-empty.svg" alt="" />
                 </a>
               </li>
@@ -75,7 +91,7 @@
             <ul class="navbar-nav d-block d-lg-none mt-3">
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  Hi, Angga
+                  Hi,  {{ Auth::user()->name }}
                 </a>
               </li>
               <li class="nav-item">
@@ -95,9 +111,10 @@
   <!-- Bootstrap core JavaScript -->
   @stack('prepend-scripts')
 
-  <script src="/vendor/jquery/jquery.slim.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
   <script>
     AOS.init();
   </script>
@@ -108,6 +125,8 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
+
+  
     @stack('addon-scripts')
 
 </body>
