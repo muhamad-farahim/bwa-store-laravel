@@ -1,9 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
 
 @section('title')
-
-Store Dashboard Transaction Details
+Transaction Details
 @endsection
 
 @section('content')
@@ -66,14 +65,16 @@ Store Dashboard Transaction Details
                               <div class="product-title">Mobile</div>
                               <div class="product-subtitle">
                                 {{ $transaction->transaction->user->phone_number }}
-
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <form action="{{ route('dashboard-transactions-update', $transaction->id) }}" method="POST" enctype="multipart/form-data">
+                      <form action="{{ route('admin.transactions.update', $transaction->id) }}" method="POST" enctype="multipart/form-data">
+                        
                         @csrf
+                        @method('PUT')
+                        
                         <div class="row">
                           <div class="col-12 mt-4">
                             <h5>Shipping information</h5>
@@ -115,10 +116,10 @@ Store Dashboard Transaction Details
                                     class="form-control"
                                     v-model="status"
                                   >
-                                    <option {{ $transaction->transaction->transaction_status === "UNPAID" ? 'SELECTED' : '' }} value="UNPAID">Unpaid</option>
-                                    <option {{ $transaction->transaction->transaction_status === "PENDING" ? 'SELECTED' : '' }} value="PENDING">Pending</option>
-                                    <option {{ $transaction->transaction->transaction_status === "SHIPPING" ? 'SELECTED' : '' }} value="SHIPPING">Shipping</option>
-                                    <option {{ $transaction->transaction->transaction_status === "SUCCESS" ? 'SELECTED' : '' }} value="SUCCESS">Success</option>
+                                  <option {{ $transaction->transaction->transaction_status === "UNPAID" ? 'SELECTED' : '' }} value="UNPAID">Unpaid</option>
+                                  <option {{ $transaction->transaction->transaction_status === "PENDING" ? 'SELECTED' : '' }} value="PENDING">Pending</option>
+                                  <option {{ $transaction->transaction->transaction_status === "SHIPPING" ? 'SELECTED' : '' }} value="SHIPPING">Shipping</option>
+                                  <option {{ $transaction->transaction->transaction_status === "SUCCESS" ? 'SELECTED' : '' }} value="SUCCESS">Success</option>
                                   </select>
                                 </div>
                                 <template v-if="status == 'SHIPPING'">
