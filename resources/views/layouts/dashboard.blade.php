@@ -55,6 +55,9 @@
                   Hi, {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  @if(Auth::user()->roles === 'ADMIN')
+                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin</a>
+                @endif
                   <a class="dropdown-item" href="{{ route('home') }}">Back to Store</a>
                   <a class="dropdown-item" href="{{ route('dashboard-setting-account') }}">Settings</a>
                   <div class="dropdown-divider"></div>
