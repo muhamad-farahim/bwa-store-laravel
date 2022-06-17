@@ -24,7 +24,7 @@ Transaction Details
                       <div class="row">
                         <div class="col-12 col-md-4">
                           <img
-                            src="/images/product-details-dashboard.png"
+                            src="{{ Storage::url($transaction->product->galleries->first()->photo ?? 'null') }}"
                             class="w-100 mb-3"
                             alt=""
                           />
@@ -33,11 +33,11 @@ Transaction Details
                           <div class="row">
                             <div class="col-12 col-md-6">
                               <div class="product-title">Customer name</div>
-                              <div class="product-subtitle">{{ $transaction->transaction->user->name }}</div>
+                              <div class="product-subtitle">{{ $transaction->transaction->user->name ?? 'null' }}</div>
                             </div>
                             <div class="col-12 col-md-6">
                               <div class="product-title">Product Name</div>
-                              <div class="product-subtitle">{{ $transaction->product->name }}</div>
+                              <div class="product-subtitle">{{ $transaction->product->name ?? 'null' }}</div>
                             </div>
                             <div class="col-12 col-md-6">
                               <div class="product-title">
@@ -94,11 +94,11 @@ Transaction Details
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">Province</div>
-                                  <div class="product-subtitle">{{ App\Models\Province::find($transaction->transaction->user->provinces_id)->name }}</div>
+                                  <div class="product-subtitle">{{ App\Models\Province::find($transaction->transaction->user->provinces_id)->name ?? 'Unkown' }}</div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">City</div>
-                                  <div class="product-subtitle">{{ App\Models\Regency::find($transaction->transaction->user->regencies_id)->name }}</div>
+                                  <div class="product-subtitle">{{ App\Models\Regency::find($transaction->transaction->user->regencies_id)->name ?? 'Unkown' }}</div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">Postal Code</div>
