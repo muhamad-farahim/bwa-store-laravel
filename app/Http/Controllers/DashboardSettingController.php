@@ -29,12 +29,9 @@ class DashboardSettingController extends Controller
         $data = $request->all();
 
         $item = $request->user();
+        $item->update($data);
 
 
-        $item->provinces_id = $data['provinces_id'];
-        $item->regencies_id = $data['regencies_id'];
-
-        $item->save();
         return redirect()->route($redirect);
     }
 }

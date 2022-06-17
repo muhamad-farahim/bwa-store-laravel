@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'roles',
-        'province_id',
+        'provinces_id',
         'regencies_id',
         'zip_code',
         'country',
