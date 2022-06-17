@@ -42,7 +42,10 @@
           >Categories</a>
           <a href="{{ route('admin.transactions.index') }}" class="list-group-item list-group-item-action {{ (request()->is('admin/transactions*') ? "active" : "") }}">Transactions</a>
           <a href="{{ route('admin.user.index') }}"  class="list-group-item list-group-item-action {{ (request()->is('admin/user*') ? "active" : "") }}">Users</a>
-          <a href="" class="list-group-item list-group-item-action">Sign out</a>
+          <a href="" class="list-group-item list-group-item-action" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
 
         </div>
       </div>

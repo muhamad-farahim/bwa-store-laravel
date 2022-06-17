@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Category;
+use App\Models\User;
+
+
 
 class DashboardSettingController extends Controller
 {
@@ -23,10 +27,14 @@ class DashboardSettingController extends Controller
     function update(Request $request, $redirect)
     {
         $data = $request->all();
+
         $item = $request->user();
 
-        $item->update($data);
 
+        $item->provinces_id = $data['provinces_id'];
+        $item->regencies_id = $data['regencies_id'];
+
+        $item->save();
         return redirect()->route($redirect);
     }
 }

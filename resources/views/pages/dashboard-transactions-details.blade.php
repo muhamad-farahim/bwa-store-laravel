@@ -93,11 +93,11 @@ Store Dashboard Transaction Details
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">Province</div>
-                                  <div class="product-subtitle">{{ App\Models\Province::find($transaction->transaction->user->provinces_id)->name }}</div>
+                                  <div class="product-subtitle">{{ App\Models\Province::find($transaction->transaction->user->provinces_id)->name ?? 'Unknown' }}</div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">City</div>
-                                  <div class="product-subtitle">{{ App\Models\Regency::find($transaction->transaction->user->regencies_id)->name }}</div>
+                                  <div class="product-subtitle">{{ App\Models\Regency::find($transaction->transaction->user->regencies_id)->name ?? 'Unknown' }}</div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="product-title">Postal Code</div>
