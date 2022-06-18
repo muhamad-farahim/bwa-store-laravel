@@ -2,46 +2,131 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\Transaction;
-use App\Models\TransactionDetail;
 
 class TransactionController extends Controller
 {
-    function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
+        if (request()->ajax()) {
+            $query = Transaction::with('user');
 
-        $sellTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])->get();
-        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])->has('product.galleries')->get();
-
-        return view('pages.admin.transaction.index', compact(['sellTransactions', 'buyTransactions']));
+            return Datatables::of($query)
+                ->addColumn('action', function ($item) {
+                    return '
+                        <div class="btn-group">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                    type="button" id="action' .  $item->id . '"
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Aksi
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
+                                    <a class="dropdown-item" href="' . route('admin.transactions.edit', $item->id) . '">
+                                        Sunting
+                                    </a>
+                                    <form action="' . route('admin.transactions.destroy', $item->id) . '" method="POST">
+                                        ' . method_field('delete') . csrf_field() . '
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>';
+                })
+                ->rawColumns(['action'])->make();
+        }
+        return view('pages.admin.transactions.index');
     }
 
-    function show(Request $request, $id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-
-        $transaction = TransactionDetail::with('transaction.user', 'product')->findOrFail($id);
-
-        return view('pages.admin.transaction.show', compact('transaction'));
+        //
     }
 
-    function update(Request $request, $id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $data = $request->validate(
-            [
-                "transaction_status" => "in:UNPAID,PENDING,SHIPPING,SUCCESS"
-            ]
-        );
+        //
+    }
 
-        $td = TransactionDetail::findOrFail($id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-        $item = Transaction::findOrFail($td->transactions_id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
 
-        $item->update($data);
+        $instance = Transaction::findOrFail($id);
 
-        return redirect()->route('admin.transactions.show', $id);
+        return view('pages.admin.transactions.edit', compact('instance'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $instance = Transaction::findOrFail($id);
+
+        $data = $request->all();
+
+        $instance->update($data);
+
+        return redirect()->route('admin.transactions.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $instance = Transaction::findOrFail($id);
+
+        $instance->delete();
+
+        return redirect()->route('admin.transactions.index');
     }
 }

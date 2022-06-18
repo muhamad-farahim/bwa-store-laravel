@@ -40,7 +40,6 @@ Store Dashboard Product Details
                                 <label for="">Product Name</label>
                                 <input
                                   type="text"
-                                  value="papel la casa"
                                   class="form-control"
                                   name="name"
                                 />

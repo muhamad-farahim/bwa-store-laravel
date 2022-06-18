@@ -17,8 +17,6 @@ Store Dashboard Product
             </div>
             <div class="dashboard-content">
               <div class="row mt-4">
-                <div class="col-12">
-                  {{-- //dawdawdwwd --}}
                   <a href="{{ route('dashboard-product-create') }}" class="btn btn-success">Add New Products</a>
                 </div>
               </div>
